@@ -1,25 +1,12 @@
-import logo from './logo.svg';
+// import logo from './images/logo-rimac.svg';
 import './App.css';
 
-function App() {
+import Home from './home/Home';
+import CarData from './car-data/CarData';
+
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    // <Home />
+    <CarData/>
   );
 }
-
-export default App;
