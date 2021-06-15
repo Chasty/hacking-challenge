@@ -10,22 +10,30 @@ import { useHistory } from "react-router-dom";
 // import CarData from '../car-data/CarData';
 
 
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link,
+    useParams
+} from "react-router-dom";
+import CarData, { Group21, Group22, Stepper } from '../car-data/CarData';
 
 function App() {
 
     const history = useHistory();
 
-    function goToHome() {
-        history.push('/datos-auto')
+    function goToHome({ name, email}) {
+        history.push(`/inicio/${name}/${email}`)
 
     }
 
-    async function getUser() {
-        await axios('https://jsonplaceholder.typicode.com/users').then(response => {
+    function getUser() {
+        axios('https://jsonplaceholder.typicode.com/users').then(response => {
             user.name = response.data[0].name;
             user.email = response.data[0].email;
             console.log(user);
-            goToHome();
+            goToHome({name: response.data[0].name, email: response.data[0].email});
         });
     }
 
@@ -177,4 +185,40 @@ function App() {
     );
 }
 
-export default App;
+
+const RootApp = () => {
+    return (
+        <Router>
+                <Switch>
+                    <Route path="/" exact>
+                        <App />
+                    </Route>
+
+                    <Route path="/inicio/:name/:email">
+                        <Stepper>
+                            <Group21 />
+                        </Stepper>
+                    </Route>
+
+                    <Route path="/datos-auto">
+                        <Stepper>
+                            <Group21 />
+                        </Stepper>
+                       
+                    </Route>
+
+                    <Route path="/armar-plan">
+                        <Stepper>
+                            <Group22 />
+                        </Stepper>
+                    </Route>
+
+                    {/*<Route path="/blog/:slug">
+                       <CarData />
+                    </Route>*/}
+                </Switch>
+        </Router>
+    )
+}
+
+export default RootApp;

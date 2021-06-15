@@ -12,6 +12,7 @@ import {
     Switch,
     Route,
     Link,
+    useParams
 } from "react-router-dom";
 
 const initialState = { count: 14300 }
@@ -34,9 +35,12 @@ function counterReducer(previousState = initialState, action) {
 }
 
 
-function Group21() {
+export function Group21() {
 
     // const [total, setTotal] = useState(14300);
+    
+    let { name, email } = useParams();
+      
 
     const [state, dispatch] = useReducer(counterReducer, initialState)
 
@@ -63,8 +67,9 @@ function Group21() {
                         <div className="IncreaseH52">Volver</div>
 
                     </div>
-                    <div className="IncreaseH22">!Hola, <span>Juan!</span></div>
-                    <div className="IncreaseH42">Completa los datos de tu auto</div>
+                    <div className="IncreaseH22">!Hola, <span>{name}!</span></div>
+                    
+                    <div className="IncreaseH42">Completa los datos de tu auto - {email}</div>
                     <div className="CustomDropdown">
                         <div className="DropDownContent">
                             <label>Año</label>
@@ -161,7 +166,7 @@ function Group21() {
     );
 }
 
-function Group22() {
+export function Group22() {
     const [initialCost, setInitialCost] = useState(20.00);
     const [selected, setSelected] = useState(true);
     const [selected2, setSelected2] = useState(false);
@@ -407,8 +412,7 @@ function Group22() {
 }
 
 
-function CarData() {
-
+export const Stepper  = ({ children }) => {
     return (
         <div className="Content2">
             <NavBar />
@@ -432,23 +436,7 @@ function CarData() {
                     <div className="StepText">Arma tu plan</div>
                 </div>
             </div>
-            {/* <Group21 /> */}
-            {/* <Group22 /> */}
-            <Router>
-                <Switch>
-                    <Route path="/" exact>
-                        <Group21 />
-                    </Route>
-                    <Route path="/datos-auto">
-                        <Group21 />
-                    </Route>
-                    <Route path="/armar-plan">
-                        <Group22 />
-                    </Route>
-                </Switch>
-            </Router>
+            {children}
         </div>
-    );
+    )
 }
-
-export default CarData;
