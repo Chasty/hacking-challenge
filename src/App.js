@@ -6,7 +6,8 @@ import CarData from './car-data/CarData';
 
 export default function App() {
   return (
-    // <Home />
-    <CarData/>
+    <Home />
+    // <CarData/>
+    // <AuthExample />
   );
 }

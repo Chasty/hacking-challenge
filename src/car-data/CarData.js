@@ -4,7 +4,7 @@ import Dropdown from 'react-bootstrap/Dropdown'
 import './CarData.css';
 import './Plan2.css';
 import NavBar from "../nav/Nav";
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useReducer } from 'react';
 import ToggleButton from '../toggle-button/ToggleButton';
 
 import {
@@ -14,9 +14,31 @@ import {
     Link,
 } from "react-router-dom";
 
+const initialState = { count: 14300 }
+
+function counterReducer(previousState = initialState, action) {
+  switch (action.type) {
+    case 'increase': 
+      return  {
+        count: previousState.count + 100
+      }
+
+    case 'decrease': 
+    return {
+      count: previousState.count - 100
+    }
+
+    default: 
+      throw new Error("No Allowed")
+  }
+}
+
+
 function Group21() {
 
-    const [total, setTotal] = useState(14300);
+    // const [total, setTotal] = useState(14300);
+
+    const [state, dispatch] = useReducer(counterReducer, initialState)
 
     const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
         <div className="DropDownString"
@@ -114,9 +136,9 @@ function Group21() {
                         </div>
                         <div className="CounterContent">
                             <div className="CounterGroup">
-                                <button className="ButtonCounter" disabled={total <= 12500} onClick={() => { setTotal(total - 100) }}>-</button>
-                                <div>$ {total}</div>
-                                <button className="ButtonCounter" disabled={total >= 16500} onClick={() => { setTotal(total + 100) }}>+</button>
+                                <button className="ButtonCounter" disabled={state.count <= 12500} onClick={() => dispatch({ type: 'decrease' })}>-</button>
+                                <div>$ {state.count}</div>
+                                <button className="ButtonCounter" disabled={state.count >= 16500} onClick={() => dispatch({ type: 'increase' })}>+</button>
 
                             </div>
                         </div>

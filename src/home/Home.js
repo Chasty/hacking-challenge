@@ -2,18 +2,34 @@
 import './Home.css';
 import Dropdown from '../dropdown/Dropdown';
 import NavBar from '../nav/Nav';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
+// inport CarData
+import { useHistory } from "react-router-dom";
+// import { useLocation } from 'react-router';
+// import CarData from '../car-data/CarData';
+
+
 
 function App() {
 
-    async function searchBook() {
+    const history = useHistory();
+
+    function goToHome() {
+        history.push('/datos-auto')
+
+    }
+
+    async function getUser() {
         await axios('https://jsonplaceholder.typicode.com/users').then(response => {
-            setData(response.data[0]);
+            user.name = response.data[0].name;
+            user.email = response.data[0].email;
+            console.log(user);
+            goToHome();
         });
     }
 
-    const [data, setData] = useState(null);
+    // const [data, setData] = useState(null);
     const [checked, setChecked] = useState(false);
     const [user, setUser] = useState({
         doc: '',
@@ -35,10 +51,8 @@ function App() {
 
     const onTapButton = () => {
         if (user.doc !== "" && user.phone !== "" && user.term && user.number !== "") {
-            searchBook();
-            // setUser()
-            
-            console.log(user);
+            getUser();
+
 
         } else {
 
@@ -48,21 +62,23 @@ function App() {
     // useEffect(()=> {
     // }, []);
 
-    useEffect(() => {
-        if (data) {
-            // console.log(data.name)
-            user.name = data.name;
-            user.email = data.email;
-            // console.log(user);
-            
-            
-        }
-    }, [data, user])
+    // useEffect(() => {
+    //     if (data) {
+    //         // console.log(data.name)
+    //         user.name = data.name;
+    //         user.email = data.email;
+    //         // setUser({...user, name: data.name, email: data.email});
+    //         // console.log(user);
+
+
+    //     }
+    // }, [data, user])
 
     // console.log(data);
     // console.log(user);
 
     return (
+
 
         <div className="Content">
             <NavBar />
@@ -86,7 +102,7 @@ function App() {
                 <h2 className="IncreaseH2">Dejanos tus datos</h2>
                 <div className="Input">
 
-                    <div className="DropDownContent">
+                    <div className="DropDownContent2">
                         <Dropdown />
                         <input
                             type="text"
@@ -155,6 +171,9 @@ function App() {
             </div>
 
         </div>
+
+
+
     );
 }
 
